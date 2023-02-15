@@ -1,0 +1,17 @@
+.header {
+  padding: 0 5rem;
+  display: flex;
+  background: #3f51b5;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+
+  h1 {
+    color: white;
+  }
+
+  .mat-mdc-list-item {
+    margin: 0 10px;
+    text-align: center;
+  }
+}
