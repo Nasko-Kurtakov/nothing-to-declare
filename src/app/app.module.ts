@@ -10,9 +10,16 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { EtfCalculatorComponent } from "./etf-matic/etf-calculator.component";
+import { TradeHistoryComponent } from "./etf-matic/trade-history/trade-history.component";
+import { DividendHistoryComponent } from "./etf-matic/dividends-history/dividends-history.component";
 
 @NgModule({
-  declarations: [AppComponent, EtfCalculatorComponent],
+  declarations: [
+    AppComponent,
+    EtfCalculatorComponent,
+    TradeHistoryComponent,
+    DividendHistoryComponent,
+  ],
   imports: [
     BrowserModule,
     MatListModule,

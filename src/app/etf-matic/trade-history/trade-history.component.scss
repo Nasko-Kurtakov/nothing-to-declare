@@ -1,0 +1,26 @@
+input[type="file"] {
+  display: none;
+}
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.row {
+  margin: 0 10px;
+}
+
+table {
+  border-radius: 16px;
+  border: 1px solid;
+  padding: 10px;
+}
+.trade-table {
+  background: aliceblue;
+  border-color: aliceblue;
+}
+
+.dividends-table {
+  background: aliceblue;
+  border-color: aliceblue;
+}
