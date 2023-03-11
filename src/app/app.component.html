@@ -1,13 +1,9 @@
 <div class="header">
   <h1>Nothing To Declare</h1>
-  <mat-nav-list>
-    <a
-      mat-list-item
-      [href]="link.href"
-      *ngFor="let link of links"
-      [activated]="activatedLink?.text == link.text"
-      >{{ link.text }}</a
-    >
-  </mat-nav-list>
+  <!-- <nav>
+    <a mat-button [routerLink]="[link.href]" *ngFor="let link of links">{{
+      link.text
+    }}</a>
+  </nav> -->
 </div>
 <router-outlet></router-outlet>
