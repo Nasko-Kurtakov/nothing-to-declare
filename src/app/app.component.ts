@@ -22,6 +22,7 @@ export class AppComponent {
   activatedLink: Link | null = null;
 
   constructor(private router: Router) {
+    debugger;
     let path = localStorage.getItem("path");
     if (path) {
       localStorage.removeItem("path");
