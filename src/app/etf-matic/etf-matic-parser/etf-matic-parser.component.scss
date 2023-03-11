@@ -1,0 +1,27 @@
+input[type="file"] {
+  display: none;
+}
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.row {
+  margin: 0 10px;
+}
+
+table {
+  border-radius: 16px;
+  border: 1px solid;
+  padding: 10px;
+  background: aliceblue;
+  border-color: aliceblue;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}

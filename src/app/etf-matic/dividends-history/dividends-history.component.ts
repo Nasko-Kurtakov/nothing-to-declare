@@ -1,7 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgxCSVParserError } from "ngx-csv-parser";
 import { map, Subscription } from "rxjs";
-import { ETFMaticParser } from "../etf-matic-parser/etf-matic-parser.directive";
+import {
+  ETFMaticParser,
+  IOptions,
+} from "../etf-matic-parser/etf-matic-parser.component";
 import { EtfDividentWithTax } from "../models/etf-dividend";
 import {
   IEtfDividentWithTax,
@@ -14,18 +17,18 @@ import {
   templateUrl: "./dividends-history.component.html",
   styleUrls: ["./dividends-history.component.scss"],
 })
-export class DividendHistoryComponent
-  extends ETFMaticParser<IEtfMovementRecord>
-  implements OnInit, OnDestroy
-{
+export class DividendHistoryComponent implements OnInit, OnDestroy {
   @Input() etfNames: string[] = [];
+  @ViewChild(ETFMaticParser, { static: true })
+  parser!: ETFMaticParser<IEtfMovementRecord>;
 
   dividendColumns: string[] = ["name", "dividendRecieved", "taxDue"];
   sub: Subscription | null = null;
   dividends: IEtfDividentWithTax[] = [];
 
   ngOnInit() {
-    this.sub = this.parsedData()
+    this.sub = this.parser
+      .parsedData()
       .pipe(
         map((data: RecordHash<IEtfMovementRecord[]>) => data["Dividends"]),
         map((data: IEtfMovementRecord[]) => {
@@ -51,8 +54,15 @@ export class DividendHistoryComponent
       });
   }
 
-  get groupBy(): string {
-    return "movementType";
+  get options(): IOptions<IEtfMovementRecord, IEtfDividentWithTax> {
+    return {
+      title: () => "Movements File",
+      tableTitle: () => "Movements Records",
+      records: () => this.dividends,
+      transform: this.transform,
+      groupBy: () => "movementType",
+      tableColumns: () => this.dividendColumns,
+    };
   }
 
   transform(parsedData: any[] | NgxCSVParserError): IEtfMovementRecord[] {
@@ -69,8 +79,7 @@ export class DividendHistoryComponent
     }
   }
 
-  override ngOnDestroy(): void {
-    super.ngOnDestroy();
+  ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { TradeHistoryComponent } from "./trade-history/trade-history.component";
 
 @Component({

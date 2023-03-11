@@ -1,0 +1,30 @@
+<div class="text-center">
+  <h3>{{ title }}</h3>
+  <input
+    class="ng-hide"
+    #buys
+    requiredFileType="csv"
+    (change)="fileChangeListener($event, file)"
+    type="file"
+  />
+  <div class="file-upload">
+    {{ fileName || "No file uploaded yet." }}
+
+    <button
+      mat-mini-fab
+      color="primary"
+      class="upload-btn"
+      (click)="buys.click()"
+    >
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+</div>
+<div [attr.class]="records.length > 0 ? 'visible' : 'invisible'">
+  <h3>{{ tableTitle }}</h3>
+  <table mat-table [dataSource]="records" class="trade-table">
+    <ng-content></ng-content>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+</div>

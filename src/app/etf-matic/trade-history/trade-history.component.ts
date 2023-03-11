@@ -1,7 +1,10 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgxCSVParserError } from "ngx-csv-parser";
 import { map, Subscription } from "rxjs";
-import { ETFMaticParser } from "../etf-matic-parser/etf-matic-parser.directive";
+import {
+  ETFMaticParser,
+  IOptions,
+} from "../etf-matic-parser/etf-matic-parser.component";
 import {
   IEtfMovementRecord,
   IEtfTradeRecord,
@@ -15,10 +18,7 @@ import { IndexTrades } from "../models/index-trades";
   templateUrl: "./trade-history.component.html",
   styleUrls: ["./trade-history.component.scss"],
 })
-export class TradeHistoryComponent
-  extends ETFMaticParser<IEtfTradeRecord>
-  implements OnInit, OnDestroy
-{
+export class TradeHistoryComponent implements OnInit, OnDestroy {
   tradingColumns: string[] = [
     "name",
     "totalQuantity",
@@ -26,12 +26,17 @@ export class TradeHistoryComponent
     "totalPrice",
   ];
   trades: ITradeSum[] = [];
-
-  parseFileSub: Subscription | null = null;
   etfNames: string[] = [];
+  parseFileSub: Subscription | null = null;
+
+  @ViewChild(ETFMaticParser, { static: true }) parser!: ETFMaticParser<
+    IEtfTradeRecord,
+    ITradeSum
+  >;
 
   ngOnInit() {
-    this.parsedData()
+    this.parseFileSub = this.parser
+      .parsedData()
       .pipe(
         map((tradeRecords: RecordHash<IEtfTradeRecord[]>) =>
           this.sumTrades(tradeRecords)
@@ -49,6 +54,17 @@ export class TradeHistoryComponent
       });
   }
 
+  get options(): IOptions<IEtfTradeRecord, ITradeSum> {
+    return {
+      title: () => "Trade History",
+      tableTitle: () => "Trade Records",
+      records: () => this.trades,
+      transform: this.transform,
+      groupBy: () => "Symbol",
+      tableColumns: () => this.tradingColumns,
+    };
+  }
+
   transform(parsedData: any[] | NgxCSVParserError): IEtfTradeRecord[] {
     if (Array.isArray(parsedData)) {
       return parsedData.map((v) => {
@@ -57,22 +73,6 @@ export class TradeHistoryComponent
           Price: +v.Price,
           Quantity: +v.Quantity,
           Total: +v["Total(€)"],
-        };
-      });
-    } else {
-      return [];
-    }
-  }
-
-  transformDividentsRecords(
-    parsedData: any[] | NgxCSVParserError
-  ): IEtfMovementRecord[] {
-    if (Array.isArray(parsedData)) {
-      return parsedData.map((v) => {
-        return {
-          date: new Date(v.date),
-          movementType: v["Movement type"],
-          amount: +v["Amount(€)"],
         };
       });
     } else {
@@ -106,20 +106,7 @@ export class TradeHistoryComponent
     return tradesSummed;
   }
 
-  get groupBy(): string {
-    return "Symbol";
-  }
-
-  get title(): string {
-    return "Trade History";
-  }
-
-  get records(): ITradeSum[] {
-    return this.trades;
-  }
-
-  override ngOnDestroy(): void {
-    super.ngOnDestroy();
+  ngOnDestroy(): void {
     this.parseFileSub?.unsubscribe();
   }
 }

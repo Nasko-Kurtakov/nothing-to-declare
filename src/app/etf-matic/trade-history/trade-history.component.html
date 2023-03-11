@@ -1,4 +1,30 @@
-<div class="text-center">
+<app-etf-matic-parser [options]="this.options">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalQuantity">
+    <th mat-header-cell *matHeaderCellDef>TotalQuantity</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.totalQuantity | number : "1.5-5" }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalPrice">
+    <th mat-header-cell *matHeaderCellDef>TotalPrice (€)</th>
+    <td mat-cell *matCellDef="let element">{{ element.totalPrice }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="avaragePrice">
+    <th mat-header-cell *matHeaderCellDef>AvaragePrice (€)</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.avaragePrice | number : "1.5-5" }}
+    </td>
+  </ng-container>
+</app-etf-matic-parser>
+
+<!-- <div class="text-center">
   <h3>Trade History</h3>
   <input
     class="ng-hide"
@@ -53,4 +79,4 @@
 
   <tr mat-header-row *matHeaderRowDef="tradingColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: tradingColumns"></tr>
-</table>
+</table> -->

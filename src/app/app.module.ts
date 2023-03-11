@@ -12,6 +12,7 @@ import { AppComponent } from "./app.component";
 import { EtfCalculatorComponent } from "./etf-matic/etf-calculator.component";
 import { TradeHistoryComponent } from "./etf-matic/trade-history/trade-history.component";
 import { DividendHistoryComponent } from "./etf-matic/dividends-history/dividends-history.component";
+import { ETFMaticParser } from "./etf-matic/etf-matic-parser/etf-matic-parser.component";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DividendHistoryComponent } from "./etf-matic/dividends-history/dividend
     EtfCalculatorComponent,
     TradeHistoryComponent,
     DividendHistoryComponent,
+    ETFMaticParser,
   ],
   imports: [
     BrowserModule,
