@@ -1,6 +1,8 @@
 <script>
   debugger;
-  const path = window.location.pathname.slice(1);
-  localStorage.setItem("path", path);
-  window.location.href = "../";
+  var path = window.location.pathname.slice(1);
+  var paths = path.split("/");
+  var baseHref = paths[0];
+  localStorage.setItem("path", paths[1]);
+  window.location.href = window.origin + "/" + baseHref;
 </script>
