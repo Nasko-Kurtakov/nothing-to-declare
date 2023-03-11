@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 interface Link {
   text: string;
@@ -19,6 +20,14 @@ export class AppComponent {
     },
   ];
   activatedLink: Link | null = null;
+
+  constructor(private router: Router) {
+    let path = localStorage.getItem("path");
+    if (path) {
+      localStorage.removeItem("path");
+      this.router.navigate([path]);
+    }
+  }
 
   toggle(link: Link) {
     this.activatedLink = link;
