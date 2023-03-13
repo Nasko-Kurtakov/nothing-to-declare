@@ -1,3 +1,5 @@
+import { NgxCSVParserError } from "ngx-csv-parser";
+
 export interface IEtfTradeRecord {
   date: string;
   Exchange: string;
@@ -32,3 +34,15 @@ export interface IEtfDividentWithTax {
 export interface RecordHash<T> {
   [key: string]: T;
 }
+
+export interface IOptions<K, S = K> {
+  title: () => string; //Trade History,
+  tableTitle: () => string;
+  records: () => S[];
+  transform(parsedData: any[] | NgxCSVParserError): K[];
+  tableColumns: () => any[];
+  groupBy: () => string;
+  fileHelperText: () => string;
+}
+
+export const EURO_TO_BGN = 1.95583;

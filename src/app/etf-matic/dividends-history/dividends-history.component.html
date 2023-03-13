@@ -4,69 +4,31 @@
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="taxDueBGN">
+    <th mat-header-cell *matHeaderCellDef>Tax Due (BGN)</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.taxInBGN }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dividendRecievedBGN">
+    <th mat-header-cell *matHeaderCellDef>Dividend Recieved (BGN)</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.dividendInBGN }}
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="dividendRecieved">
     <th mat-header-cell *matHeaderCellDef>Dividend Recieved (€)</th>
     <td mat-cell *matCellDef="let element">
-      {{ element.dividendRecieved | number : "1.5-5" }}
+      {{ element.dividendRecieved }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="taxDue">
     <th mat-header-cell *matHeaderCellDef>Tax Due (€)</th>
     <td mat-cell *matCellDef="let element">
-      {{ element.taxDue | number : "1.5-5" }}
+      {{ element.taxDue }}
     </td>
   </ng-container>
 </app-etf-matic-parser>
-
-<!-- <div class="text-center">
-  <h3>Movements File</h3>
-  <input
-    class="ng-hide"
-    #dividents
-    requiredFileType="csv"
-    (change)="fileChangeListener($event, file)"
-    type="file"
-  />
-  <div class="file-upload">
-    {{ fileName || "No file uploaded yet." }}
-
-    <button
-      mat-mini-fab
-      color="primary"
-      class="upload-btn"
-      (click)="dividents.click()"
-    >
-      <mat-icon>attach_file</mat-icon>
-    </button>
-  </div>
-</div>
-<h3>Movements Records</h3>
-<table
-  mat-table
-  [dataSource]="dividends"
-  class="dividends-table"
-  *ngIf="dividends.length > 0"
->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="dividendRecieved">
-    <th mat-header-cell *matHeaderCellDef>Dividend Recieved (€)</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.dividendRecieved | number : "1.5-5" }}
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="taxDue">
-    <th mat-header-cell *matHeaderCellDef>Tax Due (€)</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.taxDue | number : "1.5-5" }}
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="dividendColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: dividendColumns"></tr>
-</table> -->

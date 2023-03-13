@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgxCSVParserError } from "ngx-csv-parser";
 import { map, Subscription } from "rxjs";
+import { ETFMaticParser } from "../etf-matic-parser/etf-matic-parser.component";
 import {
-  ETFMaticParser,
-  IOptions,
-} from "../etf-matic-parser/etf-matic-parser.component";
-import {
-  IEtfMovementRecord,
   IEtfTradeRecord,
+  IOptions,
   ITradeSum,
   RecordHash,
-} from "../models/etf-record.interface";
+} from "../models/interfaces";
 import { IndexTrades } from "../models/index-trades";
 
 @Component({
@@ -22,6 +19,8 @@ export class TradeHistoryComponent implements OnInit, OnDestroy {
   tradingColumns: string[] = [
     "name",
     "totalQuantity",
+    "avaragePriceBGN",
+    "totalPriceBGN",
     "avaragePrice",
     "totalPrice",
   ];
@@ -62,6 +61,7 @@ export class TradeHistoryComponent implements OnInit, OnDestroy {
       transform: this.transform,
       groupBy: () => "Symbol",
       tableColumns: () => this.tradingColumns,
+      fileHelperText: () => "trade_history_(EUR|USD)_ACCOUNT-ID",
     };
   }
 

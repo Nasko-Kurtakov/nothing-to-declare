@@ -1,16 +1,14 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgxCSVParserError } from "ngx-csv-parser";
 import { map, Subscription } from "rxjs";
-import {
-  ETFMaticParser,
-  IOptions,
-} from "../etf-matic-parser/etf-matic-parser.component";
+import { ETFMaticParser } from "../etf-matic-parser/etf-matic-parser.component";
 import { EtfDividentWithTax } from "../models/etf-dividend";
 import {
   IEtfDividentWithTax,
   IEtfMovementRecord,
+  IOptions,
   RecordHash,
-} from "../models/etf-record.interface";
+} from "../models/interfaces";
 
 @Component({
   selector: "app-dividends-history",
@@ -22,7 +20,13 @@ export class DividendHistoryComponent implements OnInit, OnDestroy {
   @ViewChild(ETFMaticParser, { static: true })
   parser!: ETFMaticParser<IEtfMovementRecord>;
 
-  dividendColumns: string[] = ["name", "dividendRecieved", "taxDue"];
+  dividendColumns: string[] = [
+    "name",
+    "dividendRecievedBGN",
+    "taxDueBGN",
+    "dividendRecieved",
+    "taxDue",
+  ];
   sub: Subscription | null = null;
   dividends: IEtfDividentWithTax[] = [];
 
@@ -62,6 +66,7 @@ export class DividendHistoryComponent implements OnInit, OnDestroy {
       transform: this.transform,
       groupBy: () => "movementType",
       tableColumns: () => this.dividendColumns,
+      fileHelperText: () => "movement_history_(EUR|USD)_ACCOUNT-ID",
     };
   }
 

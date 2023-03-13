@@ -1,26 +1,15 @@
 import {
   Component,
   ContentChildren,
-  Directive,
   Input,
   OnDestroy,
-  OnInit,
   QueryList,
   ViewChild,
 } from "@angular/core";
 import { MatTable, MatColumnDef } from "@angular/material/table";
 import { NgxCsvParser, NgxCSVParserError } from "ngx-csv-parser";
-import { map, Observable, Subject, Subscription, switchMap, tap } from "rxjs";
-import { RecordHash } from "../models/etf-record.interface";
-
-export interface IOptions<K, S = K> {
-  title: () => string; //Trade History,
-  tableTitle: () => string;
-  records: () => S[];
-  transform(parsedData: any[] | NgxCSVParserError): K[];
-  tableColumns: () => any[];
-  groupBy: () => string;
-}
+import { map, Observable, Subject, switchMap } from "rxjs";
+import { IOptions, RecordHash } from "../models/interfaces";
 
 @Component({
   selector: "app-etf-matic-parser",
@@ -61,6 +50,10 @@ export class ETFMaticParser<K, S = K> implements OnDestroy {
 
   get columns(): any[] {
     return this.options.tableColumns();
+  }
+
+  get fileHelperText(): string {
+    return this.options.fileHelperText();
   }
 
   private parseCSV(file: any): Observable<any[]> {
